@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using Microsoft.Win32;
-using System.Threading;
 using System.Diagnostics;
 
 namespace Client
