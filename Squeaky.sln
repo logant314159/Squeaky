@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squeaky.Client", "Squeaky.Client\Squeaky.Client.csproj", "{03758B8F-8924-4133-BA24-672490261082}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squeaky.Shared", "Squeaky.Shared\Squeaky.Shared.csproj", "{BC58C3AE-EE33-4C8D-9B32-6752F100257C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squeaky.Server", "Squeaky.Server\Squeaky.Server.csproj", "{6655EE76-7C51-4669-859C-61D1D06FD4DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{03758B8F-8924-4133-BA24-672490261082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03758B8F-8924-4133-BA24-672490261082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03758B8F-8924-4133-BA24-672490261082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC58C3AE-EE33-4C8D-9B32-6752F100257C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC58C3AE-EE33-4C8D-9B32-6752F100257C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC58C3AE-EE33-4C8D-9B32-6752F100257C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC58C3AE-EE33-4C8D-9B32-6752F100257C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
