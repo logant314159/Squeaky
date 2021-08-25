@@ -10,6 +10,7 @@ namespace Squeaky.Client
         public static string BASEPATH = @"C:\";
         public static string INSTALLATION = Path.Combine(BASEPATH, (!string.IsNullOrEmpty(SUBDIRECTORY) ? SUBDIRECTORY + @"\" : "") + $@"{INSTALLNAME}\{INSTALLNAME}.exe");
         public static string SERVER = "127.0.0.1";
+        public static string MUTEX = "debugClient";
         public static string TAG = "debug";
 
         public static bool INSTALL = false;
@@ -23,6 +24,7 @@ namespace Squeaky.Client
         public static string BASEPATH = "";
         public static string INSTALLATION = Path.Combine(BASEPATH, (!string.IsNullOrEmpty(SUBDIRECTORY) ? SUBDIRECTORY + @"\" : "") + $@"{INSTALLNAME}\{INSTALLNAME}.exe");
         public static string SERVER = "";
+        public static string MUTEX = "";
         public static string TAG = "";
         
         public static bool INSTALL = false;
