@@ -98,6 +98,7 @@ namespace Squeaky.Client
 
         public static void Start()
         {
+            Thread.Sleep(1000); // Just in case this instance is newly installed, wait a moment for the other to exit.
             CheckMutex();
 
             if (CurrentLocation != Settings.INSTALLATION)
@@ -116,6 +117,8 @@ namespace Squeaky.Client
                         FileName = Settings.INSTALLATION
                     };
                     Process.Start(startInfo);
+
+                    Environment.Exit(2);
                 }
             }
         }
