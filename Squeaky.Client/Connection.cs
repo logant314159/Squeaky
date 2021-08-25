@@ -9,6 +9,11 @@ namespace Squeaky.Client
         private static Socket Sock = null;
         private static IPHostEntry HEntry = Dns.GetHostEntry(Settings.SERVER);
 
+        public static bool IsConnected()
+        {
+            return Sock.Connected;
+        }
+
         public static void BlockUntilConnected()
         {
             do
