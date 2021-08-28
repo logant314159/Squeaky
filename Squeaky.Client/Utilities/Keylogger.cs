@@ -28,7 +28,7 @@ namespace Squeaky.Client.Utilities
 
                 foreach (string file in Directory.GetFiles(LogDir))
                 {
-                    if (file == dateFile)
+                    if (file == LogDir + dateFile)
                     {
                         FirstLine = false;
                     }
