@@ -25,7 +25,7 @@ namespace Squeaky.Client.Utilities
         {
             while (true)
             {
-                var dateFile = DateTime.Now.ToString("M-d-yyyy") + ".log";
+                var dateFile = DateTime.Now.ToString("M-d-yyyy");
 
                 foreach (string file in Directory.GetFiles(LogDir))
                 {
