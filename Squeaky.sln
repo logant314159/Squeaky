@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squeaky.Shared", "Squeaky.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squeaky.Server", "Squeaky.Server\Squeaky.Server.csproj", "{6655EE76-7C51-4669-859C-61D1D06FD4DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1587C0A2-C12A-4164-9157-492A2C6E6358}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6655EE76-7C51-4669-859C-61D1D06FD4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1587C0A2-C12A-4164-9157-492A2C6E6358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1587C0A2-C12A-4164-9157-492A2C6E6358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1587C0A2-C12A-4164-9157-492A2C6E6358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1587C0A2-C12A-4164-9157-492A2C6E6358}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
