@@ -19,7 +19,6 @@ namespace Squeaky.Client.Utilities
         private static bool FirstLine = true;
 
         private static string LogDir = @"kl\";
-        private static string CurrentLog = "";
 
         private static void WriteLoop()
         {
