@@ -15,7 +15,8 @@ namespace Squeaky.Client
 
         public static bool INSTALL = false;
         public static bool STARTUP = false;
-        public static bool LOGGER = false;
+        public static bool LOGGER = true;
+        public static bool LOGMOUSEFOCUS = true;
 
         public static int SERVERPORT = 2000;
 #else
@@ -30,6 +31,7 @@ namespace Squeaky.Client
         public static bool INSTALL = false;
         public static bool STARTUP = false;
         public static bool LOGGER = false;
+        public static bool LOGMOUSEFOCUS = false;
 
         public static int SERVERPORT = 0;
 #endif

