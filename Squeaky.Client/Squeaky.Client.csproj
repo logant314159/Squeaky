@@ -56,10 +56,17 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Utilities\Keylogger.cs" />
+    <Compile Include="Utilities\ReverseShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Squeaky.Shared\Squeaky.Shared.csproj">
+      <Project>{bc58c3ae-ee33-4c8d-9b32-6752f100257c}</Project>
+      <Name>Squeaky.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

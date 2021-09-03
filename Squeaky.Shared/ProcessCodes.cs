@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Squeaky.Shared
 {
-    public class Class1
+    public enum ProcessCodes
     {
+        ReverseShell
     }
 }
