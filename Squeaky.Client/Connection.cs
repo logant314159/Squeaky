@@ -2,6 +2,11 @@
 using System.Text;
 using System.Net.Sockets;
 
+// -------------------------------
+//         PROCESS CODES
+// -------------------------------
+// Remote Shell - RSL
+
 namespace Squeaky.Client
 {
     public static class Connection
@@ -52,9 +57,9 @@ namespace Squeaky.Client
             return Command;
         }
 
-        public static void SendMessage(string message)
+        public static void SendMessage(string processCode, string message)
         {
-            Sock.Send(Encoding.UTF8.GetBytes(message));
+            Sock.Send(Encoding.UTF8.GetBytes(processCode + message));
         }
     }
 }
