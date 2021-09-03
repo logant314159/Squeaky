@@ -8,6 +8,6 @@ namespace Squeaky.Shared
 {
     public enum ProcessCodes
     {
-        ReverseShell
+        ReverseShell = 101
     }
 }
